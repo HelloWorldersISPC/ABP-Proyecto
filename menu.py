@@ -1,0 +1,95 @@
+from dispositivos import (
+    listar_dispositivos,
+    agregar_dispositivo,
+    eliminar_dispositivo,
+    usar_dispositivo
+)
+from usuarios import registrar_usuario, iniciar_sesion
+from escenarios import (
+    escenarios,
+    usar_escenario,
+    agregar_escenario,
+    escenarios_predefinidos
+)
+
+def menu_administrador(dispositivos, escenarios, rol_actual="admin"):
+    while True:
+        print("\n--- Menú Administrador ---")
+        print("1. Listar dispositivos")
+        print("2. Agregar dispositivo")
+        print("3. Eliminar dispositivo")
+        print("4. Usar y configurar dispositivo")
+        print("5. Escenarios")
+        print("6. Agregar Escenario")
+        print("7. Cerrar sesión")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == '1':
+            listar_dispositivos(dispositivos)
+        elif opcion == '2':
+            agregar_dispositivo(dispositivos, rol_actual, escenarios)
+        elif opcion == '3':
+            eliminar_dispositivo(dispositivos)
+        elif opcion == '4':
+            usar_dispositivo(dispositivos)
+        elif opcion == '5':
+            usar_escenario(escenarios, dispositivos)
+        elif opcion == '6':
+            agregar_escenario(escenarios)
+        elif opcion == '7':
+            print("Sesión cerrada.")
+            break
+        else:
+            print("Opción inválida.")
+
+def menu_invitado(dispositivos, escenarios, rol_actual="invitado"):
+    while True:
+        print("\n--- Menú Invitado ---")
+        print("1. Listar dispositivos")
+        print("2. Usar y configurar dispositivo")
+        print("3. Escenarios")
+        print("4. Cerrar sesión")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == '1':
+            listar_dispositivos(dispositivos)
+        elif opcion == '2':
+            usar_dispositivo(dispositivos)
+        elif opcion == '3':
+            usar_escenario(escenarios, dispositivos)
+        elif opcion == '4':
+            print("Sesión cerrada.")
+            break
+        else:
+            print("Opción inválida.")
+
+def ejecutar_menu():
+    usuarios = []
+    dispositivos = []
+
+    escenarios.clear()
+    escenarios.extend(escenarios_predefinidos)
+
+    while True:
+        print("\n--- SmartHome Solutions ---")
+        print("1. Registrarse")
+        print("2. Iniciar sesión")
+        print("3. Salir")
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == '1':
+            registrar_usuario(usuarios)
+        elif opcion == '2':
+            usuario = iniciar_sesion(usuarios)
+            if usuario:
+                if usuario["rol"] == "administrador":
+                    menu_administrador(dispositivos, escenarios, rol_actual="admin")
+                elif usuario["rol"] == "invitado":
+                    menu_invitado(dispositivos, escenarios, rol_actual="invitado")
+        elif opcion == '3':
+            print("Gracias por usar SmartHome Solutions. ¡Hasta luego!")
+            break
+        else:
+            print("Opción inválida.")
