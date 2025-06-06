@@ -1,7 +1,5 @@
 import hashlib    #Cifrar contraseñas con hash seguro (SHA-256)
-import re
-
-from numpy import roll         #Para asegurarse de que el usuario ingrese un email válido como usuario@dominio.com
+import re         #Para asegurarse de que el usuario ingrese un email válido como usuario@dominio.com
 
 def solicitar_rol():
     print("Seleccione rol:")
