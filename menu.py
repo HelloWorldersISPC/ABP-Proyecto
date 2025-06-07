@@ -79,11 +79,7 @@ def menu_invitado(dispositivos, escenarios, rol_actual="invitado"):
         elif opcion == '3':
             usar_escenario(escenarios, dispositivos)
         elif opcion == '4':
-<<<<<<< HEAD
             continue
-=======
-            ver_mi_perfil(usuario_actual)
->>>>>>> bd0a54e7ffd49a8dc95400a8253d3ff0ca308d9c
         elif opcion == '0':
             print("Sesión cerrada.")
             break

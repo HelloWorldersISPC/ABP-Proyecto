@@ -1,11 +1,8 @@
 import hashlib    #Cifrar contraseñas con hash seguro (SHA-256)
 import re         #Para asegurarse de que el usuario ingrese un email válido como usuario@dominio.com
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> bd0a54e7ffd49a8dc95400a8253d3ff0ca308d9c
 def solicitar_rol(): # esta es para para poder ediar el rol del usuario desde el menu administrador 
     print("1. Administrador")
     print("2. Invitado")
@@ -85,16 +82,3 @@ def editar_rol_usuario(usuarios):
     
     print("Usuario no encontrado.")
     
-<<<<<<< HEAD
-=======
-def ver_mi_perfil(usuario_actual):
-    if usuario_actual:
-        print("\n--- Mis Datos ---")
-        print(f"Nombre: {usuario_actual['nombre']}")
-        print(f"Email: {usuario_actual['email']}")
-        print(f"Rol: {usuario_actual['rol']}")
-    else:
-        print("No has iniciado sesión.")
-
-
->>>>>>> bd0a54e7ffd49a8dc95400a8253d3ff0ca308d9c
