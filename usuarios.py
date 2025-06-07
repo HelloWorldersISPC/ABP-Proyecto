@@ -1,14 +1,6 @@
 import hashlib    #Cifrar contraseñas con hash seguro (SHA-256)
 import re         #Para asegurarse de que el usuario ingrese un email válido como usuario@dominio.com
 
-def solicitar_rol():
-    print("Seleccione rol:")
-    print("1. Administrador")
-    print("2. Invitado")
-    rol_opcion = input("Ingrese opción (1-2): ")
-    roles = {"1": "administrador", "2": "invitado"}
-    return roles.get(rol_opcion, "invitado")
-
 def es_email_valido(email):
     patron = r'^[\w\.-]+@[\w\.-]+\.\w+$'
     return re.match(patron, email)
@@ -43,7 +35,7 @@ def registrar_usuario(usuarios):
         "rol": "invitado",
     }
     usuarios.append(usuario)
-    print(f"Usuario {nombre} registrado con rol '{rol}'.")
+    print(f"Usuario {nombre} registrado.")
     return usuario
 
 def iniciar_sesion(usuarios):
@@ -57,51 +49,51 @@ def iniciar_sesion(usuarios):
             return usuario
     print("Email o contraseña incorrectos.")
     return None
-if __name__ == "__main__":
-    # Define las credenciales del usuario administrador
-    ADMIN_EMAIL = "admin@example.com"
-    ADMIN_PASSWORD = "admin123" # ¡En un entorno real, esto no estaría hardcodeado y se gestionaría de forma más segura!
-    ADMIN_NAME = "Administrador"
-    ADMIN_ROLE = "administrador"
 
-    # Calcula el hash de la contraseña del administrador
-    admin_password_hash = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
+# if __name__ == "__main__":
+#     # Define las credenciales del usuario administrador
+#     ADMIN_EMAIL = "admin@example.com"
+#     ADMIN_PASSWORD = "admin123" # ¡En un entorno real, esto no estaría hardcodeado y se gestionaría de forma más segura!
+#     ADMIN_NAME = "Administrador"
+#     ADMIN_ROLE = "administrador"
 
-    # Crea el usuario administrador
-    usuario_admin = {
-        "id_usuario": 1, # Se le asigna el primer ID
-        "email": ADMIN_EMAIL,
-        "contrasena_hash": admin_password_hash,
-        "nombre": ADMIN_NAME,
-        "rol": ADMIN_ROLE
-    }
+#     # Calcula el hash de la contraseña del administrador
+#     admin_password_hash = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
 
-    # Inicializa la lista de usuarios con el usuario administrador
-    usuarios = [usuario_admin]
-    print(f"Usuario administrador '{ADMIN_NAME}' precargado.")
+#     # Crea el usuario administrador
+#     usuario_admin = {
+#         "id_usuario": 1, # Se le asigna el primer ID
+#         "email": ADMIN_EMAIL,
+#         "contrasena_hash": admin_password_hash,
+#         "nombre": ADMIN_NAME,
+#         "rol": ADMIN_ROLE
+#     }
 
-    # --- Ejemplo de uso del sistema ---
-    while True:
-        print("\n--- Menú Principal ---")
-        print("1. Registrar nuevo usuario")
-        print("2. Iniciar sesión")
-        print("3. Salir")
-        opcion = input("Seleccione una opción: ")
+#     # Inicializa la lista de usuarios con el usuario administrador
+#     usuarios = [usuario_admin]
+#     print(f"Usuario administrador '{ADMIN_NAME}' precargado.")
 
-        if opcion == '1':
-            registrar_usuario(usuarios)
-        elif opcion == '2':
-            usuario_actual = iniciar_sesion(usuarios)
-            if usuario_actual:
-                print(f"Usuario logueado: {usuario_actual['email']} con rol {usuario_actual['rol']}")
-                # Aquí podrías añadir lógica para diferentes roles
-                if usuario_actual['rol'] == 'administrador':
-                    print("Acceso a funciones de administrador.")
-                else:
-                    print("Acceso a funciones de invitado.")
-        elif opcion == '3':
-            print("Saliendo del programa.")
-            break
-        else:
-            print("Opción no válida. Intente de nuevo.")
-   
+#     # --- Ejemplo de uso del sistema ---
+#     while True:
+#         print("\n--- Menú Principal ---")
+#         print("1. Registrar nuevo usuario")
+#         print("2. Iniciar sesión")
+#         print("3. Salir")
+#         opcion = input("Seleccione una opción: ")
+
+#         if opcion == '1':
+#             registrar_usuario(usuarios)
+#         elif opcion == '2':
+#             usuario_actual = iniciar_sesion(usuarios)
+#             if usuario_actual:
+#                 print(f"Usuario logueado: {usuario_actual['email']} con rol {usuario_actual['rol']}")
+#                 # Aquí podrías añadir lógica para diferentes roles
+#                 if usuario_actual['rol'] == 'administrador':
+#                     print("Acceso a funciones de administrador.")
+#                 else:
+#                     print("Acceso a funciones de invitado.")
+#         elif opcion == '3':
+#             print("Saliendo del programa.")
+#             break
+#         else:
+#             print("Opción no válida. Intente de nuevo.")

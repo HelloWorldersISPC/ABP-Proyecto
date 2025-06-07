@@ -66,7 +66,13 @@ def menu_invitado(dispositivos, escenarios, rol_actual="invitado"):
             print("Opción inválida.")
 
 def ejecutar_menu():
-    usuarios = []
+    usuarios = [{
+        "id_usuario": 1,
+        "email": 'admin@admin.com',
+        "contrasena_hash": 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', # password: 123
+        "nombre": 'admin 1',
+        "rol": "administrador",
+    }]
     dispositivos = []
 
     escenarios.clear()
