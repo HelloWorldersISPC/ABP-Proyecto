@@ -52,10 +52,15 @@ def usar_escenario(escenarios, dispositivos):
         return
 
     escenario = escenarios[opcion - 1]
-    for accion in escenario['acciones']:
-        for dispositivo in dispositivos:
-            if dispositivo['nombre'] == accion['nombre']:
-                dispositivo['estado'] = accion['estado']
+    
+    if callable(escenario['acciones']):
+        escenario['acciones'](dispositivos)
+    else:
+        for accion in escenario['acciones']:
+            for dispositivo in dispositivos:
+                if dispositivo['nombre'] == accion['nombre']:
+                    dispositivo['estado'] = accion['estado']
+
     print(f"Escenario '{escenario['nombre']}' aplicado.")
 
 
