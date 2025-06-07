@@ -26,22 +26,25 @@ def agregar_dispositivo(dispositivos, rol_actual, escenarios):
         for i, tipo in enumerate(tipos, 1):
             print(f"{i}. {tipo}")
         print("0. Volver al menú principal")
-        try:
-            tipo_opcion = int(input("Ingrese el número del tipo: "))
-            if tipo_opcion == 0:
-                if rol_actual == "admin":
-                    from menu import menu_administrador
-                    menu_administrador(dispositivos, escenarios)
-                elif rol_actual == "invitado":
-                    from menu import menu_invitado
-                    menu_invitado(dispositivos, escenarios)
-                return
-            if tipo_opcion < 1 or tipo_opcion > len(tipos):
-                print("Opción inválida para tipo.")
-                continue
-        except ValueError:
-            print("Entrada inválida para tipo.")
+
+        tipo_input = input("Ingrese el número del tipo: ")
+        if not tipo_input.isdigit():
+            print("Entrada inválida. Debe ser un número.")
             continue
+
+        tipo_opcion = int(tipo_input)
+        if tipo_opcion == 0:
+            if rol_actual == "admin":
+                from menu import menu_administrador
+                menu_administrador(dispositivos, escenarios)
+            elif rol_actual == "invitado":
+                from menu import menu_invitado
+                menu_invitado(dispositivos, escenarios)
+            return
+        if tipo_opcion < 1 or tipo_opcion > len(tipos):
+            print("Opción inválida para tipo.")
+            continue
+
         tipo_seleccionado = tipos[tipo_opcion - 1]
         break
 
@@ -50,22 +53,25 @@ def agregar_dispositivo(dispositivos, rol_actual, escenarios):
         for i, ubicacion in enumerate(ubicaciones, 1):
             print(f"{i}. {ubicacion}")
         print("0. Volver al menú principal")
-        try:
-            ubicacion_opcion = int(input("Ingrese el número de la ubicación: "))
-            if ubicacion_opcion == 0:
-                if rol_actual == "admin":
-                    from menu import menu_administrador
-                    menu_administrador(dispositivos, escenarios)
-                elif rol_actual == "invitado":
-                    from menu import menu_invitado
-                    menu_invitado(dispositivos, escenarios)
-                return
-            if ubicacion_opcion < 1 or ubicacion_opcion > len(ubicaciones):
-                print("Opción inválida para ubicación.")
-                continue
-        except ValueError:
-            print("Entrada inválida para ubicación.")
+
+        ubicacion_input = input("Ingrese el número de la ubicación: ")
+        if not ubicacion_input.isdigit():
+            print("Entrada inválida. Debe ser un número.")
             continue
+
+        ubicacion_opcion = int(ubicacion_input)
+        if ubicacion_opcion == 0:
+            if rol_actual == "admin":
+                from menu import menu_administrador
+                menu_administrador(dispositivos, escenarios)
+            elif rol_actual == "invitado":
+                from menu import menu_invitado
+                menu_invitado(dispositivos, escenarios)
+            return
+        if ubicacion_opcion < 1 or ubicacion_opcion > len(ubicaciones):
+            print("Opción inválida para ubicación.")
+            continue
+
         ubicacion_seleccionada = ubicaciones[ubicacion_opcion - 1]
         break
 
@@ -138,11 +144,12 @@ def usar_dispositivo(dispositivos):
             print(f"{i}. {dispositivo['nombre']} - {dispositivo['ubicacion']} - {dispositivo['tipo']} - Estado: {estado_texto}{extra_info}")
         print("0. Volver al menú principal")
 
-        try:
-            opcion = int(input("Seleccione el número del dispositivo para usar: "))
-        except ValueError:
-            print("Entrada inválida.")
+        opcion_input = input("Seleccione el número del dispositivo para usar: ")
+        if not opcion_input.isdigit():
+            print("Entrada inválida. Debe ingresar un número.")
             continue
+
+        opcion = int(opcion_input)
 
         if opcion == 0:
             break
@@ -170,6 +177,7 @@ def usar_dispositivo(dispositivos):
                 else:
                     dispositivo["estado"] = True
                     print(f"Dispositivo '{dispositivo['nombre']}' ahora está Encendido.")
+
                 if dispositivo["tipo"] == "Aire acondicionado" and dispositivo["estado"]:
                     while True:
                         print("\nOpciones para el aire acondicionado:")
@@ -196,15 +204,16 @@ def usar_dispositivo(dispositivos):
                             else:
                                 print("Opción inválida.")
                         elif opcion_aire == "2":
-                            try:
-                                nueva_temp = int(input("Ingrese nueva temperatura (16 a 30): "))
-                                if 16 <= nueva_temp <= 30:
-                                    dispositivo["temperatura"] = nueva_temp
-                                    print(f"Temperatura actualizada a {nueva_temp}°C.")
-                                else:
-                                    print("Temperatura fuera de rango.")
-                            except ValueError:
+                            nueva_temp_input = input("Ingrese nueva temperatura (16 a 30): ")
+                            if not nueva_temp_input.isdigit():
                                 print("Debe ingresar un número.")
+                                continue
+                            nueva_temp = int(nueva_temp_input)
+                            if 16 <= nueva_temp <= 30:
+                                dispositivo["temperatura"] = nueva_temp
+                                print(f"Temperatura actualizada a {nueva_temp}°C.")
+                            else:
+                                print("Temperatura fuera de rango.")
                         elif opcion_aire == "3":
                             modo = dispositivo.get("modo", "Sin asignar")
                             temp = dispositivo.get("temperatura", "Sin asignar")
