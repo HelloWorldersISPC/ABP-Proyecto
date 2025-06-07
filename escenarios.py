@@ -38,21 +38,23 @@ def usar_escenario(escenarios, dispositivos):
     print("\nEscenarios disponibles:")
     for i, escenario in enumerate(escenarios, 1):
         print(f"{i}. {escenario['nombre']}")
-    print("0. Volver al menú principal")  # NUEVO
+    print("0. Volver al menú principal")
 
-    try:
-        opcion = int(input("Seleccione el número del escenario a aplicar: "))
-        if opcion == 0:
-            return 
-        if opcion < 1 or opcion > len(escenarios):
-            print("Opción inválida.")
-            return
-    except ValueError:
-        print("Entrada inválida.")
+    opcion_input = input("Seleccione el número del escenario a aplicar: ")
+    if not opcion_input.isdigit():
+        print("Entrada inválida. Debe ingresar un número.")
+        return
+
+    opcion = int(opcion_input)
+
+    if opcion == 0:
+        return
+    if opcion < 1 or opcion > len(escenarios):
+        print("Opción inválida.")
         return
 
     escenario = escenarios[opcion - 1]
-    
+
     if callable(escenario['acciones']):
         escenario['acciones'](dispositivos)
     else:
@@ -106,7 +108,6 @@ def agregar_escenario(escenarios):
 
             if opcion == '0':
                 if acciones_por_tipo:
-                    # Crear escenario con acciones definidas
                     def acciones_func(dispositivos):
                         for disp in dispositivos:
                             tipo_disp = disp["tipo"].lower()
@@ -129,13 +130,14 @@ def agregar_escenario(escenarios):
                     print("\nNo se definieron acciones. Volviendo al menú principal.\n")
                 return  # Siempre vuelve al menú principal
 
-            try:
-                opcion_num = int(opcion)
-                if opcion_num < 1 or opcion_num > len(disponibles_no_seleccionados):
-                    print("Opción inválida.")
-                    continue
-            except ValueError:
-                print("Entrada inválida.")
+            if not opcion.isdigit():
+                print("Entrada inválida. Debe ingresar un número.")
+                continue
+
+            opcion_num = int(opcion)
+
+            if opcion_num < 1 or opcion_num > len(disponibles_no_seleccionados):
+                print("Opción inválida.")
                 continue
 
             tipo_seleccionado = disponibles_no_seleccionados[opcion_num - 1].lower()
@@ -163,14 +165,16 @@ def agregar_escenario(escenarios):
                         modo_map = {'A': 'Frío', 'B': 'Calor'}
                         modo = modo_map.get(modo_input, 'Frío')
 
-                        try:
-                            temperatura = int(input("Ingrese la temperatura (16 a 30): "))
-                            while temperatura < 16 or temperatura > 30:
+                        while True:
+                            temp_input = input("Ingrese la temperatura (16 a 30): ").strip()
+                            if not temp_input.isdigit():
+                                print("Entrada inválida. Debe ingresar un número.")
+                                continue
+                            temperatura = int(temp_input)
+                            if 16 <= temperatura <= 30:
+                                break
+                            else:
                                 print("Temperatura fuera de rango.")
-                                temperatura = int(input("Ingrese la temperatura (16 a 30): "))
-                        except ValueError:
-                            print("Entrada inválida. Se usará temperatura por defecto de 24.")
-                            temperatura = 24
 
                         configuracion_aires["modo"] = modo
                         configuracion_aires["temperatura"] = temperatura

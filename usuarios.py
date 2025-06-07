@@ -1,5 +1,12 @@
 import hashlib    #Cifrar contraseñas con hash seguro (SHA-256)
 import re         #Para asegurarse de que el usuario ingrese un email válido como usuario@dominio.com
+def solicitar_rol(): # esta es para para poder ediar el rol del usuario desde el menu administrador 
+    print("1. Administrador")
+    print("2. Invitado")
+    rol_opcion = input("Ingrese opción (1-2): ")
+    roles = {"1": "administrador", "2": "invitado"}
+    return roles.get(rol_opcion, "invitado")
+
 
 def es_email_valido(email):
     patron = r'^[\w\.-]+@[\w\.-]+\.\w+$'
@@ -50,50 +57,35 @@ def iniciar_sesion(usuarios):
     print("Email o contraseña incorrectos.")
     return None
 
-# if __name__ == "__main__":
-#     # Define las credenciales del usuario administrador
-#     ADMIN_EMAIL = "admin@example.com"
-#     ADMIN_PASSWORD = "admin123" # ¡En un entorno real, esto no estaría hardcodeado y se gestionaría de forma más segura!
-#     ADMIN_NAME = "Administrador"
-#     ADMIN_ROLE = "administrador"
+def lista_usuarios(usuarios):
+    if not usuarios:
+        print("No hay usuarios registrados.")
+        return
 
-#     # Calcula el hash de la contraseña del administrador
-#     admin_password_hash = hashlib.sha256(ADMIN_PASSWORD.encode()).hexdigest()
+    print("\nLista de usuarios:")
+    for usuario in usuarios:
+        print(f"ID: {usuario['id_usuario']}, \nEmail: {usuario['email']}, \nNombre: {usuario['nombre']}, \nRol: {usuario['rol']}")
 
-#     # Crea el usuario administrador
-#     usuario_admin = {
-#         "id_usuario": 1, # Se le asigna el primer ID
-#         "email": ADMIN_EMAIL,
-#         "contrasena_hash": admin_password_hash,
-#         "nombre": ADMIN_NAME,
-#         "rol": ADMIN_ROLE
-#     }
+def editar_rol_usuario(usuarios):
+    lista_usuarios(usuarios)
+    email_editar = input("\nIngresa el Email de usuario a editar: ").strip().lower()
+    
+    for usuario in usuarios:
+        if usuario["email"] == email_editar:
+            nuevo_rol = solicitar_rol()
+            usuario["rol"] = nuevo_rol
+            print(f"Rol del usuario {usuario['nombre']} actualizado a {nuevo_rol}.")
+            return
+    
+    print("Usuario no encontrado.")
+    
+"""def ver_mi_perfil():
+    if usuario_actual:
+        print("\n--- Mis Datos ---")
+        print(f"Nombre: {usuario_actual['nombre']}")
+        print(f"Email: {usuario_actual['email']}")
+        print(f"Rol: {usuario_actual['rol']}")
+    else:
+        print("No has iniciado sesión.")"""
 
-#     # Inicializa la lista de usuarios con el usuario administrador
-#     usuarios = [usuario_admin]
-#     print(f"Usuario administrador '{ADMIN_NAME}' precargado.")
 
-#     # --- Ejemplo de uso del sistema ---
-#     while True:
-#         print("\n--- Menú Principal ---")
-#         print("1. Registrar nuevo usuario")
-#         print("2. Iniciar sesión")
-#         print("3. Salir")
-#         opcion = input("Seleccione una opción: ")
-
-#         if opcion == '1':
-#             registrar_usuario(usuarios)
-#         elif opcion == '2':
-#             usuario_actual = iniciar_sesion(usuarios)
-#             if usuario_actual:
-#                 print(f"Usuario logueado: {usuario_actual['email']} con rol {usuario_actual['rol']}")
-#                 # Aquí podrías añadir lógica para diferentes roles
-#                 if usuario_actual['rol'] == 'administrador':
-#                     print("Acceso a funciones de administrador.")
-#                 else:
-#                     print("Acceso a funciones de invitado.")
-#         elif opcion == '3':
-#             print("Saliendo del programa.")
-#             break
-#         else:
-#             print("Opción no válida. Intente de nuevo.")
