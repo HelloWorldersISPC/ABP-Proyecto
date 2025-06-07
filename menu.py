@@ -21,7 +21,6 @@ usuarios = [{
         "rol": "administrador",
     }]
 dispositivos = []
-usuario_acual= []
 
 
 def menu_administrador(dispositivos, escenarios, rol_actual="admin"):
@@ -79,7 +78,7 @@ def menu_invitado(dispositivos, escenarios, rol_actual="invitado"):
         elif opcion == '3':
             usar_escenario(escenarios, dispositivos)
         elif opcion == '4':
-            continue
+            ver_mi_perfil(usuario_actual)
         elif opcion == '0':
             print("Sesión cerrada.")
             break
