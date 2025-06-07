@@ -83,7 +83,7 @@ def agregar_dispositivo(dispositivos, rol_actual, escenarios):
         "tipo": tipo_seleccionado,
         "ubicacion": ubicacion_seleccionada,
         "nombre": nombre,
-        "estado": False
+        "estado": True,  # Por defecto, el dispositivo se agrega encendido
     }
     dispositivos.append(dispositivo)
     print(f"Dispositivo '{nombre}' ({tipo_seleccionado}) agregado en '{ubicacion_seleccionada}'.")
